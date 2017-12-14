@@ -29,6 +29,11 @@ Change the permissions of `uploads/`, `data/` and all their subfolders. Sufficie
 
 	chmod -R 777 uploads/ data/
 
+Note, if your system use SELinux, you will need to authorize Apache/nginx to write to `uploads/` and `data/`.  Without doing this, you will get a permissions error during installation.  To correct the SELinux contexts of these two directories, run this from the Lychee directory.
+
+    semanage fcontext -a -t httpd_sys_rw_content_t "$PWD/data(/.*)?" "$PWD/uploads/(/.*)?"
+    restorecon -vR data uploads
+
 ### 4. Finish
 
 Open Lychee in your browser and follow the given steps.
